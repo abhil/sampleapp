@@ -37,6 +37,7 @@
 /home/alrais/hello/platforms/android/assets/www/css \
 /home/alrais/hello/platforms/android/assets/www/index2.html \
 /home/alrais/hello/platforms/android/assets/www/onepage \
+/home/alrais/hello/platforms/android/assets/www/index3.html \
 /home/alrais/hello/platforms/android/assets/www/js/index.js \
 /home/alrais/hello/platforms/android/assets/www/js/scripts.js \
 /home/alrais/hello/platforms/android/assets/www/js/bootstrap.min2.js \
