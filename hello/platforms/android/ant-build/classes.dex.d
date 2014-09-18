@@ -1,4 +1,7 @@
 /home/alrais/hello/platforms/android/ant-build/classes.dex : \
+/home/alrais/hello/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
+/home/alrais/hello/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
+/home/alrais/hello/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
 /home/alrais/hello/platforms/android/ant-build/classes/com/alraislabs/hello/R$drawable.class \
 /home/alrais/hello/platforms/android/ant-build/classes/com/alraislabs/hello/BuildConfig.class \
 /home/alrais/hello/platforms/android/ant-build/classes/com/alraislabs/hello/R.class \

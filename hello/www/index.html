@@ -1,103 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>Landing Page template</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
-	</head>
-	<body>
-<div class="container-full">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script type="text/javascript" charset="utf-8" src="cordova.js" ></script>
+    <script type="text/javascript" charset="utf-8">
+    //Wait for device to ready
+    document.addEventListener("deviceready",onDeviceReady,false);
 
-      <div class="row">
-       
-        <div class="col-lg-12 text-center v-center">
-          
-          <h1>Login</h1>
-          
-          
-          <br>
-          
-          <form class="col-lg-12">
-            <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">
-            <input class="form-control input-lg" title="Don't worry. We hate spam, and will not share your email with anyone." placeholder="Enter your email address" type="text">
-            <input class="form-control input-lg" title="Don't worry. We hate spam, and will not share your email with anyone." placeholder="Enter password" type="text">
-           
-              <button class="btn btn-lg btn-primary" type="button">Login <a href="index2.html"></a></button>
-            </div>
-          </form>
-        </div>
-        
-      </div> <!-- /row -->
-  
-  	  <!-- <div class="row">
-       
-        <div class="col-lg-12 text-center v-center" style="font-size:39pt;">
-          <a href="#"><i class="icon-google-plus"></i></a> <a href="#"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
-        </div>
-      
-      </div>
-   -->
-  	<br><br><br><br><br>
+    //device API are available
+    
+        //manipulate
+         function populateDB(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+    }
 
-</div> <!-- /container full -->
+    //Query database
+    function queryDB(tx){
+      tx.executeSql('SELECT * FROM DEMO' , [], querySucess, errorDB);
+    }
 
-<div class="container">
-  
-  	<hr>
-  
-  <!-- 	<div class="row">
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading"><h3>Hello.</h3></div>
-            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-            Aliquam in felis sit amet augue.
-            </div>
-          </div>
-        </div>
-      	<div class="col-md-4">
-        	<div class="panel panel-default">
-            <div class="panel-heading"><h3>Hello.</h3></div>
-            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-            Aliquam in felis sit amet augue.
-            </div>
-          </div>
-        </div>
-      	<div class="col-md-4">
-        	<div class="panel panel-default">
-            <div class="panel-heading"><h3>Hello.</h3></div>
-            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-            Aliquam in felis sit amet augue.
-            </div>
-          </div>
-        </div>
-    </div>
-   -->
-	<!-- <div class="row">
-        <div class="col-lg-12">
-        <br><br>
-          <p class="pull-right"><a href="http://www.bootply.com"></a> &nbsp; ©Copyright 2013 ACME<sup>TM</sup> Brand.</p>
-        <br><br>
-        </div>
-    </div>
- --></div>
+    //query the data base
+    function querySucess(tx, results){
+       var len = results.rows.length;
+        console.log("DEMO table: " + len + " rows found.");
+        for (var i=0; i<len; i++){
+            console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+        }
 
+    }
 
-	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-	</body>
+    // Transaction error callback
+    //
+    function errorCB(tx, err) {
+      console.log("Error processing SQL: "+err.code);
+
+        //alert("Error processing SQL: "+err);
+    }
+
+    // Transaction success callback
+    //
+    function successCB() {
+      var db= window.openDatabase("test","1.0","Test DB",10000);
+      db.transaction(queryDB,errorCB);
+        //alert("success!");
+    }
+    function onDeviceReady(){
+      var db= window.openDatabase("test","1.0","Test DB",10000);
+      db.transaction(populateDB, errorCB, successCB);
+      // var keyname = window.localStorage.key(0);
+      // window.localStorage.setItem("key","value");
+      // var value = window.localStorage.getItem("key");
+      // alert(value);
+        }
+
+ </script>
+</head>
+<body>
+  <script type="text/javascript">
+
+  function my(){
+    alert("Hai");
+  }</script>
+  <h1>Database</h1>
+<!-- <button type="button" onclick="my()">Button</button> -->
+
+<!-- <div class='header'><h1>Directory</h1></div>
+<div class='search-view'>
+    <input class='search-key' type="search" placeholder="Enter name"/>
+    <ul class='list employee-list'></ul>
+</div>
+ --> 
+<script src="lib/jquery.js"></script>
+<script src="js/services/memory/EmployeeService.js"></script>
+<script src="js/app.js"></script>
+
+</body>
 </html>
