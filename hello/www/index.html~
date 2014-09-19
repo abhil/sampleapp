@@ -1,50 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>Bootstrap Login Form</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
-	</head>
-	<body>
-<!--login modal-->
-<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h1 class="text-center">Login</h1>
-      </div>
-      <div class="modal-body">
-          <form class="form col-md-12 center-block">
-            <div class="form-group">
-              <input type="text" class="form-control input-lg" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control input-lg" placeholder="Password">
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-              <span class="pull-right"><a href="#">Register</a></span><span><a href="#">Need help?</a></span>
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-          <div class="col-md-12">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		  </div>	
-      </div>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script type="text/javascript" charset="utf-8" src="cordova.js" ></script>
+    <script type="text/javascript" src="js/jquery.min.js"/></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.0rc2.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+    document.addEventListener("deviceready", onDeviceReady, false);
+    var db = window.openDatabase("PropertiesDB", "1.0", "PropertyDB", 200000); //will create database
+ 
+    //function will be called when device ready
+    function onDeviceReady(){
+        db.transaction(populateDB, errorCB, successCB);
+    }
+ 
+    //create table and insert some record
+    function populateDB(tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Place TEXT NOT NULL)');
+        tx.executeSql('INSERT INTO Properties(Name,Place) VALUES ("LC", "UAE")');
+        tx.executeSql('INSERT INTO Properties(Name,Place) VALUES ("VL", "UAE")');
+    }
+ 
+    //function will be called when an error occurred
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+ 
+    //function will be called when process succeed
+    function successCB() {
+        alert("success!");
+        db.transaction(queryDB,errorCB);
+    }
+ 
+    //select all from Properties
+    function queryDB(tx){
+        tx.executeSql('SELECT * FROM Properties',[],querySuccess,errorCB);
+    }
+ 
+    function querySuccess(tx,result){
+	
+var len = results.rows.length;
+        console.log("DEMO table: " + len + " rows found.");
+        for (var i=0; i<len; i++){
+            console.log("Row = " + i + " ID = " + results.rows.item(i).Name + " Place =  " + results.rows.item(i).Place);
+        }
+
+        /*$('#PropertiesList').empty();
+        $.each(result.rows,function(index){
+            var row = result.rows.item(index);
+            $('#PropertiesList').append('<li><a href="#"><h3 class="ui-li-heading">'+row['Name']+'</h3><p class="ui-li-desc">Place '+row['Place']+'</p></a></li>');
+        });
+ 
+        $('#PropertiesList').listview();*/
+    }
+  
+
+    </script>
+        </head>
+   <body>
+ 
+<div data-role="page">
+  <div data-role="header" data-position="fixed" data-theme="b">
+    <h1>Properties</h1>
   </div>
+  <div data-role="content">
+     <ul id="PropertiesList">
+    </ul>
   </div>
 </div>
-	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="js/bootstrap.min2.js"></script>
-	</body>
-</html>
+<!--end of Properties Page--->
+</body></html>

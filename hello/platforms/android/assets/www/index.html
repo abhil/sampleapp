@@ -4,79 +4,71 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script type="text/javascript" charset="utf-8" src="cordova.js" ></script>
+    <script type="text/javascript" src="js/jquery.min.js"/></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.0rc2.min.js"></script>
+
     <script type="text/javascript" charset="utf-8">
-    //Wait for device to ready
-    document.addEventListener("deviceready",onDeviceReady,false);
-
-    //device API are available
-    
-        //manipulate
-         function populateDB(tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DEMO');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-    }
-
-    //Query database
-    function queryDB(tx){
-      tx.executeSql('SELECT * FROM DEMO' , [], querySucess, errorDB);
-    }
-
-    //query the data base
-    function querySucess(tx, results){
-       var len = results.rows.length;
-        console.log("DEMO table: " + len + " rows found.");
-        for (var i=0; i<len; i++){
-            console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
-        }
-
-    }
-
-    // Transaction error callback
-    //
-    function errorCB(tx, err) {
-      console.log("Error processing SQL: "+err.code);
-
-        //alert("Error processing SQL: "+err);
-    }
-
-    // Transaction success callback
-    //
-    function successCB() {
-      var db= window.openDatabase("test","1.0","Test DB",10000);
-      db.transaction(queryDB,errorCB);
-        //alert("success!");
-    }
+    document.addEventListener("deviceready", onDeviceReady, false);
+    var db = window.openDatabase("PropertiesDB", "1.0", "PropertyDB", 200000); //will create database
+ 
+    //function will be called when device ready
     function onDeviceReady(){
-      var db= window.openDatabase("test","1.0","Test DB",10000);
-      db.transaction(populateDB, errorCB, successCB);
-      // var keyname = window.localStorage.key(0);
-      // window.localStorage.setItem("key","value");
-      // var value = window.localStorage.getItem("key");
-      // alert(value);
+        db.transaction(populateDB, errorCB, successCB);
+    }
+ 
+    //create table and insert some record
+    function populateDB(tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Place TEXT NOT NULL)');
+        tx.executeSql('INSERT INTO Properties(Name,Place) VALUES ("LC", "UAE")');
+        tx.executeSql('INSERT INTO Properties(Name,Place) VALUES ("VL", "UAE")');
+    }
+ 
+    //function will be called when an error occurred
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+ 
+    //function will be called when process succeed
+    function successCB() {
+        alert("success!");
+        db.transaction(queryDB,errorCB);
+    }
+ 
+    //select all from Properties
+    function queryDB(tx){
+        tx.executeSql('SELECT * FROM Properties',[],querySuccess,errorCB);
+    }
+ 
+    function querySuccess(tx,result){
+	
+var len = result.rows.length;
+        console.log("Properties table " + len + " rows found.");
+        for (var i=0; i<len; i++){
+            console.log("Row = " + i + " ID = " + result.rows.item(i).Name + " Place =  " + result.rows.item(i).Place);
         }
 
- </script>
-</head>
-<body>
-  <script type="text/javascript">
+        /*$('#PropertiesList').empty();
+        $.each(result.rows,function(index){
+            var row = result.rows.item(index);
+            $('#PropertiesList').append('<li><a href="#"><h3 class="ui-li-heading">'+row['Name']+'</h3><p class="ui-li-desc">Place '+row['Place']+'</p></a></li>');
+        });
+ 
+        $('#PropertiesList').listview();*/
+    }
+  
 
-  function my(){
-    alert("Hai");
-  }</script>
-  <h1>Database</h1>
-<!-- <button type="button" onclick="my()">Button</button> -->
-
-<!-- <div class='header'><h1>Directory</h1></div>
-<div class='search-view'>
-    <input class='search-key' type="search" placeholder="Enter name"/>
-    <ul class='list employee-list'></ul>
+    </script>
+        </head>
+   <body>
+ 
+<div data-role="page">
+  <div data-role="header" data-position="fixed" data-theme="b">
+    <h1>Properties</h1>
+  </div>
+  <div data-role="content">
+     <ul id="PropertiesList">
+    </ul>
+  </div>
 </div>
- --> 
-<script src="lib/jquery.js"></script>
-<script src="js/services/memory/EmployeeService.js"></script>
-<script src="js/app.js"></script>
-
-</body>
-</html>
+<!--end of Properties Page--->
+</body></html>
