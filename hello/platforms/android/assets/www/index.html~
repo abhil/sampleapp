@@ -41,10 +41,10 @@
  
     function querySuccess(tx,result){
 	
-var len = results.rows.length;
-        console.log("DEMO table: " + len + " rows found.");
+var len = result.rows.length;
+        console.log("Properties table " + len + " rows found.");
         for (var i=0; i<len; i++){
-            console.log("Row = " + i + " ID = " + results.rows.item(i).Name + " Place =  " + results.rows.item(i).Place);
+            console.log("Row = " + i + " ID = " + result.rows.item(i).Name + " Place =  " + result.rows.item(i).Place);
         }
 
         /*$('#PropertiesList').empty();
