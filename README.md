@@ -8,8 +8,13 @@ url is http://databaseofalrais.site90.net/
 
 
 
-file.php to access the database
-Details
+file.php to access the database.
+<br>
+When i execute this get the output like:
+<br>
+[ {"Name": "Labourcamp", "Street": "Dubai", "Phone": "345677","Pincode": "89676","Water": "7689","Elec": "9875"}, {"Name": "Villa", "Street": "asd", "Phone": "86908530","Pincode": "92580","Water": "8509","Elec": "56"}, {"Name": "Apartment", "Street": "wdad", "Phone": "907543","Pincode": "8570","Water": "9287","Elec": "93850"}] 
+<br>
+Details of the database.
 <br>
 
 $mysql_host = "mysql3.000webhost.com";
