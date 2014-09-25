@@ -1,70 +1,131 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="jquery.mobile/jquery.jsonp.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready",deviceready,false);
+                
+            function deviceready(){
+                alert("cordova is loaded");
+                
+               // myFunction(url);
+               getEmpDetails();
+                }
 
-<head>
-<script type="text/javascript" charset="utf-8" src="js/phonegap-1.1.0.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
-    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
-    <script src="jquery.mobile/jquery-1.7.2.min.js"></script>
-    <script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
-    <script src="js/main.js"></script>
-   
-</head>
+//var xmlhttp = new XMLHttpRequest();
+//var url = "http://www.w3schools.com/website/Customers_MYSQL.php";
+//var url = "http://localhost/html/data.php";
+//var url = "http://databaseofalrais.site90.net/index.php";
 
-<body onload= "init()">
+//myFunction(xmlhttp.responseText);
 
-<p id = "demo"></p>
-<div id="loginPage" data-role="page">
+// xmlhttp.onreadystatechange=function() {
+//     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//         myFunction(xmlhttp.responseText);
+//     }
+//     else if(xmlhttp.readyState == 0 || xmlhttp.status == 404){
+//         alert("request not initialized or page not found");
+//     }
+// }
+// xmlhttp.open("GET", url, true);
+// xmlhttp.send();
 
-    <div data-role="header">
-        <h1>Properties</h1>
-    </div>
+// function myFunction(response) {
+//     var arr = JSON.parse(response);
+//     alert(arr);
+//     var i;    
+//     var out = "<table>";
+    
+//     for(i = 0; i < arr.length; i++) {
+//         out += "<tr><td>" + 
+//         arr[i].Name +
+//         "</td><td>" +
+//         arr[i].Street +
+//         "</td><td>" +
+//         arr[i].Phone +
+//         "</td><td>"+
+//         arr[i].Pincode +
+//         "</td><td>"+
+//         arr[i].Water +
+//         "</td><td>"+
+//         arr[i].City+
+//         "</td></tr>";
+//     }
+//     out += "</table>"
+//     document.getElementById("id01").innerHTML = out;
+//     document.getElementById("demo").innerHTML = arr[3].Name;
+// }
 
-<form id="loginForm">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div data-role="fieldcontain" class="ui-hide-label">
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" value="" placeholder="Username" />
-        </div>
+        </script>
 
-        <div data-role="fieldcontain" class="ui-hide-label">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" value="" placeholder="Password" />
-        </div>
+         <!--<script>
+  //  $(document).ready(function(){
+  //      $('#your-tweets').append('<li>My Properties\'s details');     
+  //      $.jsonp({
+  //          url: 'http://www.w3schools.com/website/Customers_MYSQL.php',
+  //          callbackParameter: 'callback',
+  //          timeout: 25000,
+  //          success: function(data, status) {
+  //              //$('#your-tweets').append('<li>The feed loads fine');
+  //             $('#your-tweets').empty();
+  //             $.each(data, function(i,item){
+  //                 var tweet = item.text;
+  //                 $('#your-tweets').append('<li>'+tweet);
+  //             });
+  //         },
+  //         error: function(){
+  //             $('#your-tweets').append('<li>There was an error loading the feed');
+  //         }
+  //     });
+  // });
+   </script>-->
 
-        <input type="submit" value="Login" id="submitButton">
-        <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
+  <script>
+     function getEmpDetails() {
+        alert("Enertd");
+   $.ajax({       
+  type : 'POST',  
+   url : 'http://www.w3schools.com/website/Customers_MYSQL.php',
+  
 
-      
-        </form>
-        <br>
-        <br>
-        <br>
-        <br>
-    <div data-role="footer">
-        <h4>&copy Alraislabs</h4>
-    </div>
-</div>
-<script>
- $("#loginPage").live("pageinit", function(e) {
-        checkPreAuth();
-    });
-</script>
-<script type="text/javascript">
-   function showAlert() {
-        navigator.notification.alert(
-            'You are the winner!',  // message
-            alertDismissed,         // callback
-            'Game Over',            // title
-            'Done'                  // buttonName
-        );
-    }
+  dataType:'json',   
+          success : function(data) { 
+          var empObject = JSON.parse(data);            
+          alert(empObject);
+          var empObjectLen = empObject.length;
+          //alert(empObjectLen);
+          
+          for (var i=0; i<empObjectLen; i++) {     
+       
+// Get the data in local JS variables
+       var Name = empObject[i].Name;
+       var Street = empObject[i].Street;
+        $('#your-tweets').append('<li>'+Name+'<li>'+Street);
+       var empDateOfJoining = empObject.employeeDetails[i].empDateOfJoining ;
+       var empSalary = empObject.employeeDetails[i].empSalary;
+  }            
+  },
+     error : function(xhr, type) { 
+alert('Internal Error Occoured!'); 
+}  
+}); 
+}
 
-</script>
+  </script>
+        
+        <title>Properties</title>
+    </head>
+    <body>
+     <div id = "id01"></div>   
+     <ul id="your-tweets"></ul>
 
-</body>
+    </body>
 </html>

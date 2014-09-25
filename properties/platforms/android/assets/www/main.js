@@ -41,6 +41,7 @@ function handleLogin() {
 
 function deviceReady() {
     $("#loginForm").on("submit",handleLogin);
+    navigator.notification.alert('phonegap loaded',dismiss, 'Load','done');
 	// console.log("deviceReady");
 	// $("#loginPage").on("pageinit",function() {
 	// 	console.log("pageinit run");
@@ -48,4 +49,8 @@ function deviceReady() {
 	// 	checkPreAuth();
 	// });
 	// $.mobile.changePage("#loginPage");
+}
+
+function dismiss(){
+    
 }

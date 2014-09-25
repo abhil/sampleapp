@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+table, td, th {
+    border: 1px solid orange;
+}
+
+th {
+    background-color: orange;
+    color: white;
+}
+</style>
+
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready",deviceready,false);
+                
+            function deviceready(){
+                alert("cordova is loaded");
+                var db = window.openDatabase("Properties","1.0","Properties",200000);
+                db.transaction(populateDB,errdb,successdb);
+            }
+            function populateDB(tx){
+                tx.executeSql("CREATE TABLE IF NOT EXISTS myproperties(Name text ,City text, Phone INTEGER)");
+
+            }
+            function errdb(error){
+               // navigator.notification.alert(error, null, 'Error','ok');
+               alert("error",error);
+
+            }
+            function successdb(){
+                    //navigator.notification.alert("Database created successfully", null, 'Successs','ok');
+                    alert("successfully");
+                    var db = window.openDatabase("Properties","1.0","Properties",200000);
+                db.transaction(queryDB,errdb);
+            }
+
+            function adddata(){
+                var name = document.getElementById("n").value;
+                var city = document.getElementById("city").value;
+                var phone = document.getElementById("phone").value;
+
+                var db = window.openDatabase("Properties","1.0","Properties",200000);
+
+                db.transaction(function (tx){
+                    newdata(tx, name,city,phone);
+                }, erronadd,successfulladded);
+
+            }
+
+            function newdata(tx, name,city,phone){
+                var query = "INSERT INTO myproperties(name,city,phone) values('"+name+"','"+city+"',"+phone+")";
+                alert(query);
+                tx.executeSql(query);
+            }
+
+            function erronadd(error){
+                alert("Error on adding data",error);
+
+            }
+
+            function successfulladded(){
+                alert("New data added successfully");
+                document.getElementById("n").value= "";
+                document.getElementById("city").value= "";
+                document.getElementById("phone").value= "";
+             var db = window.openDatabase("Properties","1.0","Properties",200000);
+                db.transaction(queryDB,errdb);   
+            }
+
+
+
+
+            function queryDB(tx){
+        tx.executeSql('SELECT * FROM myproperties',[],querySuccess,errdb);
+    }
+ 
+    function querySuccess(tx,result){
+        /*$('#LabourCampsList').empty();
+       
+            var row = result.rows.length;
+            for(var i=0; i<row; i++){
+            $('#LabourCampsList').append('<li><a href="#"><h3 class="ui-li-heading">'+row.item(i).Name+'</h3><p class="ui-li-desc">Place '+row.item(i).Place+'</p></a></li>');
+      }
+ 
+        $('#LabourCampsList').listview();
+*/       // document.getElementById("disp").innerHTML=result.rows.item().Name;
+       //  document.getElementById("disp").innerHTML=result.rows.length;
+         var row = result.rows.length;
+        // for (var i = 0; i < row; i++) {
+            //console.log(result.rows.item(i).Name);
+             // document.getElementById("disp2").innerHTML=result.rows.item(0).Name;
+             // document.getElementById("disp3").innerHTML=result.rows.item(0).City;
+             // document.getElementById("list1").innerHTML=result.rows.item(1).Name;
+             // document.getElementById("table1").innerHTML=result.rows.item(1).Phone;
+
+              var out = "<table>";
+                    
+    
+    for(i = 0; i < row; i++) {
+        out += "<tr><td>" + 
+        result.rows.item(i).Name +
+        "</td><td>" +
+        result.rows.item(i).City +
+        "</td><td>" +
+        result.rows.item(i).Phone +
+        // "</td><td>"+
+        // arr[i].Pincode +
+        // "</td><td>"+
+        // arr[i].Water +
+        // "</td><td>"+
+        // arr[i].City+
+        "</td></tr>";
+    }
+    out += "</table>"
+   document.getElementById("table1").innerHTML=out;
+         
+    }
+        </script>
+        
+        <title>Properties</title>
+    </head>
+    <body>
+        <p id = "disp2"></p>
+        <p id = "disp3"></p>
+        <p id = "list1"></p>
+            <center>
+                <table border= "1">
+                <tr>
+                    <td colspan="2">
+                        <h2>Add Your property</h2></td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>
+                        <input type="text" name="n" id="n" value = ""/>
+                    </td></tr>
+                    <tr>
+                    <th>City</th>
+                    <td>
+                        <input type="text" name="city" id="city" value = ""/>
+                    </td></tr>
+                    <tr>
+                    <th>Phone</th>
+                    <td>
+                        <input type="text" name="phone" id="phone" value = ""/>
+                    </td></tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <a href="#"><input type="submit" value="Add" id="add" onclick="adddata()"/></a></td></tr>
+
+            </table>    
+        </center>
+        <h1>Details</h1>
+        <div id="table1"></div>
+
+        <div data-role="content" id="property">  
+        <ul data-role="listview" id="propertylist"></ul>
+    </div>
+        
+    </body>
+</html>

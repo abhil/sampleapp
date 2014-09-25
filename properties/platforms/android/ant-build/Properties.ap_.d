@@ -48,6 +48,7 @@
 /home/alrais/properties/platforms/android/assets/www/file.php \
 /home/alrais/properties/platforms/android/assets/www/main.js \
 /home/alrais/properties/platforms/android/assets/www/indexDevicename.html \
+/home/alrais/properties/platforms/android/assets/www/phonegap-1.1.0.js \
 /home/alrais/properties/platforms/android/assets/www/css \
 /home/alrais/properties/platforms/android/assets/www/indexdata.html \
 /home/alrais/properties/platforms/android/assets/www/property.html \
@@ -147,6 +148,7 @@
 /home/alrais/properties/platforms/android/assets/www/css/images/icons-18-white.png \
 /home/alrais/properties/platforms/android/assets/www/jquery.mobile/jquery.mobile-1.1.0.css \
 /home/alrais/properties/platforms/android/assets/www/jquery.mobile/images \
+/home/alrais/properties/platforms/android/assets/www/jquery.mobile/jquery.jsonp.js \
 /home/alrais/properties/platforms/android/assets/www/jquery.mobile/jquery.mobile-1.1.0.min.js \
 /home/alrais/properties/platforms/android/assets/www/jquery.mobile/jquery-1.7.2.min.js \
 /home/alrais/properties/platforms/android/assets/www/jquery.mobile/jquery.mobile-1.1.0.js \
