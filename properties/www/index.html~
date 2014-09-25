@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.1.0.js"></script>
+   
+<style>
+h1 {
+    border-bottom: 3px solid #cc9900;
+    color: #996600;
+    font-size: 30px;
+}
+table, th , td  {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+}
+table tr:nth-child(odd)	{
+    background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+    background-color: #0055cc;
+}
+</style>
+
+<script type="text/javascript" charset="utf-8">
+
+ 	document.addEventListner("deviceready", onDeviceReady, false);
+	
+	function onDeviceReady(){
+		checkConnection();
+		document.getElementById('demo').innerHTML= device.name;
+	}
+	function checkConnection(){
+	     var networkState = navigator.network.connection.type;
+		var state = {};
+		state.[Connection.UNKNOWN]= 'Unknown connection';
+		state.[Connection.ETHERNET]= 'Ethernet connection';
+		state.[Connection.WIFI]= 'Wi-Fi connection';
+		state.[Connection.CELL_2G]= 'Cell-2G connection';
+		state.[Connection.CELL_3G]= 'Cell-3G connection';
+		state.[Connection.CELL_4G]= 'Cell-4G connection';
+		state.[Connection.NONE]= 'No Network connection';
+
+		alert('Connection type' +state[networkState]);
+	}
+</script>
+<script>
+var xmlhttp = new XMLHttpRequest();
+var url = "http://www.w3schools.com/website/Customers_MYSQL.php";
+
+xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        myFunction(xmlhttp.responseText);
+    }
+}
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+function myFunction(response) {
+    var arr = JSON.parse(response);
+    var i;
+    var out = "<table>";
+	
+    for(i = 0; i < arr.length; i++) {
+        out += "<tr><td>" + 
+        arr[i].Name +
+        "</td><td>" +
+        arr[i].Street +
+        "</td><td>" +
+        arr[i].Phone +
+        "</td><td>"+
+        arr[i].Pincode +
+        "</td><td>"+
+        arr[i].Water +
+        "</td><td>"+
+        arr[i].City+
+        "</td></tr>";
+    }
+    out += "</table>"
+    document.getElementById("id01").innerHTML = out;
+	document.getElementById("demo").innerHTML = arr[3].Name;
+}
+</script>
+<script>
+var Text = [ {"Name": "Labourcamp", "Street": "Dubai", "Phone": "345677","Pincode": "89676","Water": "7689","Elec": "9875"}, {"Name": "Villa", "Street": "asd", "Phone": "86908530","Pincode": "92580","Water": "8509","Elec": "56"}, {"Name": "Apartment", "Street": "wdad", "Phone": "907543","Pincode": "8570","Water": "9287","Elec": "93850"}] ;
+var t = JSON.parse(Text);
+myFun(t);
+function myFun(ext) {
+    var array = ext;
+    var i;
+    var output = "<table>";
+	
+    for(i = 0; i < array.length; i++) {
+        out += "<tr><td>" + 
+        array[i].Name +
+        "</td><td>" +
+        array[i].Street +
+        "</td><td>" +
+        array[i].Phone +
+        "</td><td>"+
+        array[i].Pincode +
+        "</td><td>"+
+        array[i].Water +
+        "</td><td>"+
+        array[i].Elec+
+        "</td></tr>";
+    }
+    output += "</table>"
+    document.getElementById("id").innerHTML = output;
+	
+}
+
+</script>
+
+</head>
+
+<body>
+
+<h1>Details of Properties</h1>
+<div id="id01"></div>
+<div id="id02"></div>
+<p id = "demo"></p>
+<p><a href="#" onclick="onDeviceReady(); return false;">Show Alert</a></p>
+
+
+
+<p id = "demo"></p>
+</body>
+</html>

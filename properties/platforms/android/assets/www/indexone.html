@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="jquery.mobile-1.0rc2.min.css" />
+    <script type="text/javascript" src="cordova.js"/></script>
+<script type="text/javascript" src="js/phonegap-1.1.0.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"/></script>
+<script type="text/javascript" src="js/jquery.mobile-1.0rc2.min.js"></script>
+<script src="js/jquery-1.10.1.min.js"></script>
+        <script src="js/jquery.mobile-1.4.0-beta.1.min.js"></script>
+        <script src="js/iscrollview/iscroll.js"></script>
+        <script src="js/jquery.mobile.iscrollview.js"></script>
+
+
+    <script>
+	//add listener when device ready
+    document.addEventListener("deviceready", onDeviceReady, false);
+    var db = window.openDatabase("MyData", "1.0", "MyData", 200000); //will create database Dummy_DB or open it
+ 
+    //function will be called when device ready
+    function onDeviceReady(){
+        //var db = window.openDatabase("MyData", "1.0", "MyData", 200000);
+        db.transaction(populateDB, errorCB, successCB);
+
+        
+
+    }
+ 
+    //create table and insert some record
+    function populateDB(tx) {
+
+        tx.executeSql('CREATE TABLE IF NOT EXISTS LabourCamps (id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Place TEXT NOT NULL)');
+        tx.executeSql('INSERT INTO LabourCamps(Name,Place) VALUES ("Alexandre Pato", "AC Milan")');
+        tx.executeSql('INSERT INTO LabourCamps(Name,Place) VALUES ("Alrais tower", "UAE")');
+    }
+ 
+    //function will be called when an error occurred
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+ 
+    //function will be called when process succeed
+    function successCB() {
+        alert("success!");
+        db.transaction(queryDB,errorCB);
+    }
+ 
+    //select all from LabourCamps
+    function queryDB(tx){
+        tx.executeSql('SELECT * FROM LabourCamps',[],querySuccess,errorCB);
+    }
+ 
+    function querySuccess(tx,result){
+        $('#LabourCampsList').empty();
+       
+            var row = result.rows.length;
+            for(var i=0; i<row; i++){
+            $('#LabourCampsList').append('<li><a href="#"><h3 class="ui-li-heading">'+row.item(i).Name+'</h3><p class="ui-li-desc">Place '+row.item(i).Place+'</p></a></li>');
+      }
+ 
+        $('#LabourCampsList').listview();
+       // document.getElementById("disp").innerHTML=result.rows.item().Name;
+       //  document.getElementById("disp").innerHTML=result.rows.length;
+       //   var row = result.rows.length;
+       //  // for (var i = 0; i < row; i++) {
+       //      //console.log(result.rows.item(i).Name);
+       //       document.getElementById("disp2").innerHTML=result.rows.item(0).Name;
+       //       document.getElementById("disp3").innerHTML=result.rows.item(0).Place;
+       //       document.getElementById("list1").innerHTML=result.rows.item(1).Name;
+       //       document.getElementById("list2").innerHTML=result.rows.item(1).Place;
+         
+    }
+  
+
+    </script>
+        </head>
+   <body>
+ 
+<div data-role="page">
+  <div data-role="header" data-position="fixed" data-theme="a">
+    <h1>Properties</h1>
+  </div>
+  <div data-role="content">
+     <ul id="LabourCampsList">
+    </ul>
+  </div>
+</div>
+<p id="disp"></p>
+<p id="disp2"></p>
+<p id="disp3"></p>
+<div id="div1"></div>
+
+<button type= "button" onclick="onDeviceReady()"> Click</button>
+
+
+</body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script type="text/javascript" charset="utf-8" src="js/phonegap-1.1.0.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script src="jquery.mobile/jquery-1.7.2.min.js"></script>
+    <script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+    <script src="js/main.js"></script>
+   
+</head>
+
+<body onload= "init()">
+
+<p id = "demo"></p>
+<div id="loginPage" data-role="page">
+
+    <div data-role="header">
+        <h1>Properties</h1>
+    </div>
+
+<form id="loginForm">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div data-role="fieldcontain" class="ui-hide-label">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" value="" placeholder="Username" />
+        </div>
+
+        <div data-role="fieldcontain" class="ui-hide-label">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" value="" placeholder="Password" />
+        </div>
+
+        <input type="submit" value="Login" id="submitButton">
+        <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
+
+      
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+    <div data-role="footer">
+        <h4>&copy Alraislabs</h4>
+    </div>
+</div>
+<script>
+ $("#loginPage").live("pageinit", function(e) {
+        checkPreAuth();
+    });
+</script>
+<script type="text/javascript">
+   function showAlert() {
+        navigator.notification.alert(
+            'You are the winner!',  // message
+            alertDismissed,         // callback
+            'Game Over',            // title
+            'Done'                  // buttonName
+        );
+    }
+
+</script>
+
+</body>
+</html>
