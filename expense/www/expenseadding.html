@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=0.9, maximum-scale=.90, minimum-scale=0.90, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+        <meta name="msapplication-tap-highlight" content="no" />
+         <link href="css/bootstrap.min.css" rel="stylesheet">
+             <link href="css/signin.css" rel="stylesheet">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/expenseadding.js"></script>
+        <script type="text/javascript">
+
+        function addF(){
+                var food =  document.getElementById("food_amount").value;
+                var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+
+                database.transaction(function(tx){
+                    newf(tx, food);
+                }, erroronADD,successonADD);
+            }
+
+            function newf(tx,food){
+                var query =  "INSERT INTO Single(food) values("+food+") ";
+                alert(query);
+                tx.executeSql(query);
+            }
+
+            function addT(){
+                var travel =  document.getElementById("travel_amount").value;
+                var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+
+                database.transaction(function(tx){
+                    newt(tx, travel);
+                }, erroronADD,successonADD);
+            }
+
+            function newt(tx,travel){
+                var query =  "INSERT INTO Single(travel) values("+travel+") ";
+                alert(query);
+                tx.executeSql(query);
+            }
+
+            function erroronADD(error){
+                alert("Sql error"+error.code);
+            }
+
+            function successonADD(){
+                alert("budget added successfully");
+            }
+            
+        </script>
+        <title>Hello World</title>
+    </head>
+    <body style = "width : 95%; margin :10px;">
+        <div class = "row">
+        <div class = "col-md-12 col-sm-12">
+
+        <h2 class="form-signin-heading">Please add your Expenditure</h2><br>
+        <input type="number" class="form-control" placeholder="Food amount" required autofocus id="food_amount"style = "width : 100%; margin :10px;"/>
+        <input type = "submit" onclick="addF()" value= "Food" class="btn btn-lg btn-success"style = "width : 100%; margin :10px;">
+        <br>
+        <input type="number" class="form-control" placeholder="Travel amount" required autofocus id="travel_amount"style = "width : 100%; margin :10px;"/>
+        <input type = "submit" onclick="addT()" value= "Travel" class="btn btn-lg btn-warning"style = "width : 100%; margin :10px;">
+        <br>
+        <input type="number" class="form-control" placeholder="Shopping amount" required autofocus id="shopping_amount"style = "width : 100%; margin :10px;"/>
+        <input type = "submit" onclick="addS()" value= "Shopping" class="btn btn-lg btn-shopping"style = "width : 100%; margin :10px;">
+        <div class= "btn btn-lg btn-info" style = "width : 100%; margin :10px;">
+        <a href="">+</a>
+        </div>
+        </div>
+        </div>       
+    </body>
+</html>

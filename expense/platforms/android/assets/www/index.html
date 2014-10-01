@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=0.9, maximum-scale=.90, minimum-scale=0.90, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+        <meta name="msapplication-tap-highlight" content="no" />
+         <link href="css/bootstrap.min.css" rel="stylesheet">
+             <link href="css/signin.css" rel="stylesheet">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready",deviceready,false);
+           
+
+            function deviceready(){
+                //alert("cordova loaded");
+                 var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+                database.transaction(populateDB,errorDB,successDB);
+                database.transaction(queryDB,erroronADD);   
+
+                //navigator.vibrate(3000);
+               // document.addEventListener("pause",onpause,false);
+            }
+
+            function populateDB(tx){
+             //tx.executeSql("DROP TABLE IF EXISTS Budget");
+                tx.executeSql("CREATE TABLE IF NOT EXISTS Budget(Bid PRIMARY KEY, budget INTEGER, date DATETIME)");
+            }
+
+            function errorDB(error){
+                alert("Sql error"+error.code);
+            }
+
+            function successDB(){
+                alert("database successfully created");
+            }
+
+            function onpause(){
+                alert("pause");
+            }
+
+            function addbudget(){
+                var budget =  document.getElementById("budget_amount").value;
+                var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+
+                database.transaction(function(tx){
+                    newbudget(tx, budget);
+                }, erroronADD,successonADD);
+            }
+
+            function newbudget(tx,budget){
+                var query =  "INSERT INTO Budget(budget) values("+budget+") ";
+                alert(query);
+                tx.executeSql(query);
+            }
+
+            function erroronADD(error){
+                alert("Sql error"+error.code);
+            }
+
+            function successonADD(){
+                alert("budget added successfully");
+                    var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+                   database.transaction(queryDB,erroronADD);   
+            }
+
+
+            function queryDB(tx){
+        tx.executeSql('SELECT * FROM Budget',[],querySuccess,queryerror);
+    }
+ 
+    function querySuccess(tx,result){
+         var row = result.rows.length;
+         var balance = result.rows.item(1).budget;
+
+              var out = "<table>";
+                    
+    
+    for(i = 0; i < row; i++) {
+        out += "<tr><td>" + 
+        result.rows.item(i).Bid +
+        "</td><td>" +
+        result.rows.item(i).budget +
+        //"</td><td>" +
+        //result.rows.item(i).food +
+         "</td><td>"+
+         result.rows.item(i).date +
+        // "</td><td>"+
+        // arr[i].Water +
+        // "</td><td>"+
+        // arr[i].City+
+        "</td></tr>";
+    }
+    out += "</table>"
+   document.getElementById("table1").innerHTML=out;
+   document.getElementById("balance").innerHTML=balance;
+         
+    }
+
+    function queryerror(error){
+        alert("Cant display Parse error"+error.code)
+    }
+        </script>
+        <title>Expense</title>
+    </head>
+    <body style = "width : 95%; margin :10px;">
+        <h2 class="page-header">Please add your Budget</h2><br>
+        <input type="number" class="form-control" placeholder="Budget amount" required autofocus id="budget_amount"style = "width : 100%; margin :10px;"/>
+        <br>
+        <br>
+        <a href="expenseadding.html"class= "btn btn-lg btn-info" style = "width : 100%; margin :10px;" onclick="addbudget()">
+        Add to Budget amount <!-- <span class="glyphicon glyphicon-plus"></span> -->
+        </a>
+        <div id="table1"></div>
+        <p>Your blance is:<div id="balance"></div></p>
+    </body>
+</html>
