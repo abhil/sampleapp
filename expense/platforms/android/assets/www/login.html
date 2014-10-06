@@ -1,0 +1,47 @@
+<html>
+<head>
+
+         <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=0.9, maximum-scale=.90, minimum-scale=0.90, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+        <meta name="msapplication-tap-highlight" content="no" />
+     <link href="css/bootstrap.min.css" rel="stylesheet">
+             <link href="css/signin.css" rel="stylesheet">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        
+</head>
+<body>
+    <div class="container">
+<form class="form-signin" id="login" method="POST" action="https://yourapp.com/login" accept-charset="UTF-8" role="form">
+    <input required="true" type="text" name="username" id="username" class="form-control" placeholder="Email address"><br>
+    <input required="true" type="password" name="password" id="password" class="form-control" placeholder="Password">
+    <div class="checkbox"><label><input id="remember" type="checkbox" name="remember" value="1">Remember me</label></div>
+    <input id="loginBtn" type="submit" value="Login">
+</form>
+</div>
+	
+    <script>
+	$(function() {
+        $('#loginBtn').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: 'login',
+                type: 'post',
+                dataType: 'json',
+                data: $('form#login').serialize(),
+                success: function(data) {
+                    alert("Logged in"); // <- this would have to be your own way of showing that user is logged in
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText); // <- same here, your own div, p, span, whatever you wish to use
+                }
+            });
+            return false;
+        });
+    });
+	</script>
+</body>
+</html>

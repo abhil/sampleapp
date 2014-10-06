@@ -17,9 +17,9 @@
 
             function deviceready(){
                 //alert("cordova loaded");
-                 var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+                 var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
                 database.transaction(populateDB,errorDB,successDB);
-                database.transaction(queryDB,erroronADD);   
+        
 
                 //navigator.vibrate(3000);
                // document.addEventListener("pause",onpause,false);
@@ -27,8 +27,36 @@
 
             function populateDB(tx){
              //tx.executeSql("DROP TABLE IF EXISTS Budget");
-                tx.executeSql("CREATE TABLE IF NOT EXISTS Budget(Bid PRIMARY KEY, budget INTEGER, date DATETIME)");
-            }
+
+             isTableExists(tx, "Budget", function(status){
+                if(!status){
+                    alert("table not exists");
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS Budget2(bid INTEGER, budget INTEGER, date text)');
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS Tableb(bid PRIMARY KEY, budget INTEGER, date text)');
+                }
+
+                else{
+                    alert("table already exists");
+                    //tx.executeSql('DROP TABLE Budget');
+                }
+             });
+                
+
+             }
+
+             function isTableExists(tx, tableName, callback){
+                tx.executeSql('SELECT * FROM Tableb',[], function(tx,resultset){
+                    if (resultset.rows.length<=0) {
+                        callback(false);
+                    }
+                    else{
+                        callback(true);
+                    }
+
+                }, function(err){
+                    callback(false);
+                });
+             }
 
             function errorDB(error){
                 alert("Sql error"+error.code);
@@ -36,6 +64,8 @@
 
             function successDB(){
                 alert("database successfully created");
+                var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
+                database.transaction(queryDB,erroronADD);   
             }
 
             function onpause(){
@@ -44,7 +74,7 @@
 
             function addbudget(){
                 var budget =  document.getElementById("budget_amount").value;
-                var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+                var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
 
                 database.transaction(function(tx){
                     newbudget(tx, budget);
@@ -52,7 +82,7 @@
             }
 
             function newbudget(tx,budget){
-                var query =  "INSERT INTO Budget(budget) values("+budget+") ";
+                var query =  "INSERT INTO Tableb(budget) values("+budget+") ";
                 alert(query);
                 tx.executeSql(query);
             }
@@ -63,13 +93,13 @@
 
             function successonADD(){
                 alert("budget added successfully");
-                    var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+                    var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
                    database.transaction(queryDB,erroronADD);   
             }
 
 
             function queryDB(tx){
-        tx.executeSql('SELECT * FROM Budget',[],querySuccess,queryerror);
+        tx.executeSql('SELECT * FROM Tableb',[],querySuccess,queryerror);
     }
  
     function querySuccess(tx,result){

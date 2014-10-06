@@ -30,6 +30,7 @@
 /home/alrais/expense/platforms/android/assets/_where-is-www.txt \
 /home/alrais/expense/platforms/android/assets/www \
 /home/alrais/expense/platforms/android/assets/www/cordova_plugins.js \
+/home/alrais/expense/platforms/android/assets/www/login.html \
 /home/alrais/expense/platforms/android/assets/www/expenseadding.html \
 /home/alrais/expense/platforms/android/assets/www/cordova.js \
 /home/alrais/expense/platforms/android/assets/www/js \
