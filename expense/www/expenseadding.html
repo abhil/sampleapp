@@ -15,22 +15,21 @@
 
         function addF(){
                 var food =  document.getElementById("food_amount").value;
-                var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
-
+                 var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
                 database.transaction(function(tx){
                     newf(tx, food);
                 }, erroronADD,successonADD);
             }
 
             function newf(tx,food){
-                var query =  "INSERT INTO Single(food) values("+food+") ";
+                var query =  "INSERT INTO details(budget) values("+food+") ";
                 alert(query);
                 tx.executeSql(query);
             }
 
             function addT(){
                 var travel =  document.getElementById("travel_amount").value;
-                var database = window.openDatabase("Expensemgr","1.0","Expensemgr",200000);
+                 var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
 
                 database.transaction(function(tx){
                     newt(tx, travel);
@@ -48,7 +47,23 @@
             }
 
             function successonADD(){
-                alert("budget added successfully");
+                alert("amount added successfully");
+                database.transaction(queryDB,queryerror);
+            }
+
+            function queryDB(tx){
+                tx.executeSql("SELECT * FROM details",[],querysucess, queryerror);
+            }
+
+            function querysucess(tx, result){
+                var bid = result.rows.item(1).;
+                var fooda = result.rows.item(1).food;
+                alert(bid);
+                alert(fooda);
+            }
+
+            function queryerror(err){
+                alert("query error"+err)
             }
             
         </script>
@@ -63,12 +78,12 @@
         <input type = "submit" onclick="addF()" value= "Food" class="btn btn-lg btn-success"style = "width : 100%; margin :10px;">
         <br>
         <input type="number" class="form-control" placeholder="Travel amount" required autofocus id="travel_amount"style = "width : 100%; margin :10px;"/>
-        <input type = "submit" onclick="addT()" value= "Travel" class="btn btn-lg btn-warning"style = "width : 100%; margin :10px;">
+        <input type = "submit" onclick="queryDB()" value= "Travel" class="btn btn-lg btn-warning"style = "width : 100%; margin :10px;">
         <br>
         <input type="number" class="form-control" placeholder="Shopping amount" required autofocus id="shopping_amount"style = "width : 100%; margin :10px;"/>
         <input type = "submit" onclick="addS()" value= "Shopping" class="btn btn-lg btn-shopping"style = "width : 100%; margin :10px;">
         <div class= "btn btn-lg btn-info" style = "width : 100%; margin :10px;">
-        <a href="">+</a>
+        <a href="login.html">++++++++++++</a>
         </div>
         </div>
         </div>       

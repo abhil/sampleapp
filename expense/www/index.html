@@ -26,46 +26,22 @@
             }
 
             function populateDB(tx){
-             //tx.executeSql("DROP TABLE IF EXISTS Budget");
+             alert("create table");
+             //tx.executeSql("DROP TABLE IF EXISTS foodT");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS details (bid INTEGER PRIMARY KEY, budget INTEGER, date DATETIME NOT NULL)" );
+           //tx.executeSql("CREATE TABLE  foodT(fid INTEGER PRIMARY KEY, food INTEGER, fbid INTEGER, FOREIGN KEY (fbid) REFERENCES details(bid))" );
+            
 
-             isTableExists(tx, "Budget", function(status){
-                if(!status){
-                    alert("table not exists");
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS Budget2(bid INTEGER, budget INTEGER, date text)');
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS Tableb(bid PRIMARY KEY, budget INTEGER, date text)');
-                }
-
-                else{
-                    alert("table already exists");
-                    //tx.executeSql('DROP TABLE Budget');
-                }
-             });
-                
-
-             }
-
-             function isTableExists(tx, tableName, callback){
-                tx.executeSql('SELECT * FROM Tableb',[], function(tx,resultset){
-                    if (resultset.rows.length<=0) {
-                        callback(false);
-                    }
-                    else{
-                        callback(true);
-                    }
-
-                }, function(err){
-                    callback(false);
-                });
              }
 
             function errorDB(error){
-                alert("Sql error"+error.code);
+                alert("Sql error in database creation"+error.code);
             }
 
             function successDB(){
                 alert("database successfully created");
                 var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
-                database.transaction(queryDB,erroronADD);   
+                database.transaction(queryDB,queryerror);   
             }
 
             function onpause(){
@@ -82,24 +58,27 @@
             }
 
             function newbudget(tx,budget){
-                var query =  "INSERT INTO Tableb(budget) values("+budget+") ";
+                var getdate = new Date();
+                var d = getdate.toDateString();
+                alert(d);
+                var query =  "INSERT INTO details(budget, date) values("+budget+",'"+d+"') ";
                 alert(query);
                 tx.executeSql(query);
             }
 
             function erroronADD(error){
-                alert("Sql error"+error.code);
+                alert("Sql error on adding "+error.code);
             }
 
             function successonADD(){
                 alert("budget added successfully");
                     var database = window.openDatabase("ExpenseManager","1.0","ExpenseManager",200000);
-                   database.transaction(queryDB,erroronADD);   
+                   database.transaction(queryDB,queryerror);   
             }
 
 
             function queryDB(tx){
-        tx.executeSql('SELECT * FROM Tableb',[],querySuccess,queryerror);
+        tx.executeSql('SELECT * FROM details',[],querySuccess,queryerror);
     }
  
     function querySuccess(tx,result){
@@ -111,7 +90,7 @@
     
     for(i = 0; i < row; i++) {
         out += "<tr><td>" + 
-        result.rows.item(i).Bid +
+        result.rows.item(i).bid +
         "</td><td>" +
         result.rows.item(i).budget +
         //"</td><td>" +
