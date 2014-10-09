@@ -38,13 +38,10 @@
 /home/alrais/myApp/app/platforms/android/assets/www/index.html \
 /home/alrais/myApp/app/platforms/android/assets/www/lib \
 /home/alrais/myApp/app/platforms/android/assets/www/css \
-/home/alrais/myApp/app/platforms/android/assets/www/templates/apartment.html \
 /home/alrais/myApp/app/platforms/android/assets/www/templates/playlist.html \
 /home/alrais/myApp/app/platforms/android/assets/www/templates/login.html \
 /home/alrais/myApp/app/platforms/android/assets/www/templates/menu.html \
-/home/alrais/myApp/app/platforms/android/assets/www/templates/villas.html \
 /home/alrais/myApp/app/platforms/android/assets/www/templates/search.html \
-/home/alrais/myApp/app/platforms/android/assets/www/templates/labourcamps.html \
 /home/alrais/myApp/app/platforms/android/assets/www/templates/playlists.html \
 /home/alrais/myApp/app/platforms/android/assets/www/templates/browse.html \
 /home/alrais/myApp/app/platforms/android/assets/www/js/controllers.js \
