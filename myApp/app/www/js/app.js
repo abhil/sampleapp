@@ -66,6 +66,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.register', {
+      url: "/register",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/register.html",
+          controller: 'ValidateCtrl'
+        }
+      }
+    })
+
     .state('app.single', {
       url: "/playlists/:playlistId",
       views: {

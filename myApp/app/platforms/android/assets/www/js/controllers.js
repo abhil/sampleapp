@@ -25,10 +25,15 @@ angular.module('starter.controllers', [])
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
+    $ionicModal.fromTemplateUrl('templates/search.html',{
+      scope:$scope
+    }).then(function(modal){
+      $scope.modal=modal;
+    });
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
-   alert("Log in not allowed");
+   alert("Log in not allowed" + $scope.loginData.username);
   };
 })
 

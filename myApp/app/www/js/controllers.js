@@ -39,14 +39,18 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+    { title: 'Orange', id: 1 },
+    { title: 'Apple', id: 2 },
+    { title: 'Cran Berry', id: 3 },
+    { title: 'Mangooste', id: 4 },
+    { title: 'Goose Berry', id: 5 },
+    { title: 'Mango', id: 6 }
   ];
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('ValidateCtrl',function($scope){
+
 });

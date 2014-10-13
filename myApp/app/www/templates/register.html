@@ -1,0 +1,48 @@
+<ion-view title="Register">
+<ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content>
+<form ng-submit="register()" name="regForm" novalidate>
+<div class="list">
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">First Name</span>
+    <input type="text" ng-model="firstName" placeholder="John" name="firstName">
+    <span style="color:red" ng-show="regForm.firstName.$dirty && regForm.firstName.$invalid">
+  <span ng-show="regForm.firstName.$error.required">Username is required.</span>
+  </span>
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Last Name</span>
+    <input type="text" ng-model="lastName"placeholder="Suhr" name="lastName">
+    <span style="color:red" ng-show="regForm.lastName.$dirty && regForm.lastName.$invalid">
+  <span ng-show="regForm.lastName.$error.required">Username is required.</span>
+  </span>
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Email</span>
+    <input type="text" ng-model="email"placeholder="john@suhr.com" name="email">
+    <span style="color:red" ng-show="regForm.email.$dirty && regForm.email.$invalid">
+  <span ng-show="regForm.email.$error.required">Username is required.</span>
+  </span>
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Password</span>
+    <input type="password" ng-model="password"placeholder="charcters">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Retype-Password</span>
+    <input type="password" ng-model="retypepassword"placeholder="charcters">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Street</span>
+    <input type="text" ng-model="retypepassword"placeholder="Al-Kha">
+  </label>
+  <label class="item">
+    <button class="button button-full button-royal" ng-disabled="regForm.firstname.$dirty && regForm.firstname.$invalid ||
+  regForm.email.$dirty && regForm.email.$invalid">Register</button></label>
+</div>
+</form>
+
+</ion-content>
+</ion-view>
